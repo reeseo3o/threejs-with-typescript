@@ -9,7 +9,7 @@ class App {
   private cube?: THREE.Mesh 
 
   constructor() {
-    console.log('Hello THREE.JS')
+    console.log('Hello three.js')
 
     this.domApp = document.querySelector('#app')!
     
