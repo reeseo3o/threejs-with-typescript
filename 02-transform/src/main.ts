@@ -44,32 +44,28 @@ class App {
   }
 
   private setupModels() {
-    const gameBox = new THREE.BoxGeometry(1);
     const material = new THREE.MeshStandardMaterial();
-    const box = new THREE.Mesh(gameBox, material);
 
-    // const matrixS = new THREE.Matrix4().makeScale(0.5, 0.5, 0.5);
-    // const matrixR = new THREE.Matrix4().makeRotationX(
-    //   THREE.MathUtils.degToRad(45)
-    // );
-    // const matrixT = new THREE.Matrix4().makeTranslation(0, 2, 0);
-    // box.applyMatrix4(matrixS);
-    // box.applyMatrix4(matrixR);
-    // box.applyMatrix4(matrixT);
+    const geomParent = new THREE.BoxGeometry(2, 2, 2);
+    const parent = new THREE.Mesh(geomParent, material);
+    parent.position.y = 2;
+    // 자식은 부모의 transform에 영향을 받는다. -> 부모의 변환에 따라 상대적인 위치를 가진다.
+    parent.rotation.z = THREE.MathUtils.degToRad(45);
+    // 부모의 회전에 따라 자식의 위치도 변경된다.
 
-    // 위 코드와 아래 코드는 같은 결과를 나타낸다. 다만 행렬로 직접 변환할때는 적용 순서에 주의해야 한다. 그 이유는 행렬의 곱셈 순서가 바뀌면 결과가 달라지기 때문이다.
+    const geomChild = new THREE.BoxGeometry(1, 1, 1);
+    const child = new THREE.Mesh(geomChild, material);
+    child.position.x = 3;
+    child.rotation.y = THREE.MathUtils.degToRad(45);
 
-    // 아래와 같이 position과 rotation scale을 사용하면 Three.js가 내부적으로 크기 -> 회전 -> 이동 순서로 적용된다.
-    // box.position.x = 2;
-    box.position.set(0, 2, 0);
-    // 한 번에 설정도 가능
-    box.rotation.x = THREE.MathUtils.degToRad(45);
-    box.scale.set(0.5, 0.5, 0.5);
+    parent.add(child);
+    this.scene.add(parent);
 
-    this.scene.add(box);
-
-    const axeOfScene = new THREE.AxesHelper(5);
+    const axeOfScene = new THREE.AxesHelper(10);
     this.scene.add(axeOfScene);
+
+    const axeOfParent = new THREE.AxesHelper(3);
+    parent.add(axeOfParent);
   }
 
   private setupEvents() {
