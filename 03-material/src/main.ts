@@ -43,23 +43,18 @@ class App {
   }
 
   private setupModels() {
-    const geometry = new THREE.SphereGeometry();
-    geometry.deleteAttribute("uv");
-    // SphereGeometry에 할당된 uv attribute때문임. PointsMaterial의 uv 속성 제거
-    const circle = new THREE.TextureLoader().load("./circle.png");
-    const material = new THREE.PointsMaterial({
-      color: 0xff000,
-      size: 5,
-      sizeAttenuation: false,
-      map: circle,
-      alphaTest: 0.5,
-      // 이미지 픽셀 값중 알파값이 알파테스트에 지정한 값보다 클 때만 표시하게 하는 속성
-    });
-    const points = new THREE.Points(geometry, material);
-    this.scene.add(points);
+    const vertices = [-1, 1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0];
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute(
+      "position",
+      new THREE.Float32BufferAttribute(vertices, 3)
+    );
+    // Float32BufferAttribute 객체는 하나의 값이 32비트 실수 데이터가 저장된 버퍼 객체
+    // 3은 배열에서 3개씩 묶어서 하나의 값(좌표)으로 취급하겠다는 의미
 
-    const gui = new GUI();
-    gui.add(material, "size", 0.1, 10, 0.01);
+    const material = new THREE.LineBasicMaterial({ color: 0x00ff00 });
+    const line = new THREE.Line(geometry, material);
+    this.scene.add(line);
   }
 
   private setupEvents() {
