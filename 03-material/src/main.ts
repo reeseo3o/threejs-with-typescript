@@ -53,7 +53,7 @@ class App {
       sizeAttenuation: false,
       map: circle,
       alphaTest: 0.5,
-      // 이미지 픽셀 값중 알파박ㅂㅅ이 0.5보다 클 경우만 이미지 이용하게 하는 속성
+      // 이미지 픽셀 값중 알파값이 알파테스트에 지정한 값보다 클 때만 표시하게 하는 속성
     });
     const points = new THREE.Points(geometry, material);
     this.scene.add(points);
