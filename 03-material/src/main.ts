@@ -60,7 +60,8 @@ class App {
       // scale - 라인 전체의 표현 횟수 지정
     });
     // 재질 적용 시 각 라인의 길이를 알고 있어야 함으로 각 라인의 길이 계산 필요
-    const line = new THREE.Line(geometry, material);
+    const line = new THREE.LineSegments(geometry, material);
+    // LineSegments 두 개의 좌표를 이용해 하나의 선분을 구성
     line.computeLineDistances();
     this.scene.add(line);
   }
